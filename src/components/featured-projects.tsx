@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { animate } from "animejs";
 
 type FeaturedProject = {
@@ -94,7 +93,7 @@ function FeaturedProjectCard({ project }: { project: FeaturedProject }) {
     );
     const content = (
         <>
-            <Image src={project.image} alt={`${project.title} project preview`} width={1200} height={675} className="aspect-video w-full object-cover" />
+            <img src={project.image} alt={`${project.title} project preview`} width="1200" height="675" loading="lazy" className="aspect-video w-full object-cover" />
             <div className="mt-4 space-y-2">
                 {titleRow}
                 <p className="leading-relaxed text-zinc-300 text-xs">{project.description}</p>
