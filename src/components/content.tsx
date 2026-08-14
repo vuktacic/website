@@ -1,6 +1,5 @@
 'use client';
 
-import Image from 'next/image';
 import { animate, stagger } from 'animejs';
 import { useEffect } from 'react';
 import Icon from './icon';
@@ -14,22 +13,22 @@ const socialLinks = [
 
 const roles = [
     {
+        icon: '/icons/cr.svg',
+        alt: 'Creekside Robotics',
+        href: 'https://instagram.com/byrnerobotics',
+        description: 'captained one of the top frc teams in bc',
+    },
+    {
         icon: '/icons/bcydc.svg',
         alt: 'BCYDC',
         href: 'https://bcydc.ca',
-        description: 'led bcydc, the largest high school developer community in bc & organized the biggest youth hackathons in vancouver',
+        description: 'led the largest high school developer community in bc & organized the biggest youth hackathons in vancouver',
     },
     {
-        icon: '/icons/cr.svg',
-        alt: 'Creekside Robotics',
-        href: 'https://www.instagram.com/byrnerobotics',
-        description: 'captained creekside robotics, the no. 2 first robotics team in the province',
-    },
-    {
-        icon: '/icons/dsac.svg',
-        alt: 'DSAC',
-        href: 'https://www.instagram.com/burnabydsac/',
-        description: 'represented 27000 burnaby students on dsac',
+        icon: '/icons/open-sauce.png',
+        alt: 'Open Sauce',
+        href: 'https://opensauce.com/',
+        description: 'presented my projects to 50k+ people & 40+ creators in sf',
     },
 ];
 
@@ -50,40 +49,45 @@ const timelineEntries: TimelineEntry[] = [
     {
         year: 2026,
         lines: [
-            { text: 'A placeholder for the next chapter.', icon: '/icons/bcydc.svg', iconAlt: 'BCYDC' },
-            { text: 'A placeholder for the next chapter.' },
-            { text: 'A placeholder for the next chaptedsdfr.' },
-            { text: "Examplegfdsgfds", icon: "/icons/example.svg", href: "https://google.com", label: "Example link" },
+            { text: 'currently building a chess-playing robot', href: 'https://github.com/vuktacic/chessler', label: 'Chess bot' },
+            { text: 'showcased my projects at opensauce', icon: '/icons/open-sauce.png', iconAlt: 'Open Sauce', href: 'https://opensauce.com/', label: 'Open Sauce' },
+            { text: 'built a wind tunnel in 48 hours' },
+            { text: 'won hack club nexus', href: 'https://nexus.hackclub.com/', label: 'Hack Club Nexus' },
+            { text: 'got into waterloo & got full-rides from ubc & uoft', href: 'https://lnkd.in/p/gSM2v9Qc', label: 'linkedin larp announcement' },
+            { text: 'organized my city\'s largest talent show' },
+            { text: 'built a lidar scanner for $100', href: 'https://github.com/vuktacic/vdar', label: 'Lidar Scanner' },
+            { text: 'built a 9ft trebuchet in 2 days' },
+            { text: 'led my frc team to #1 in bc' },
+            // { text: "Examplegfdsgfds", icon: "/icons/bcydc.svg", href: "https://google.com", label: "Example link" },
         ],
     },
     {
         year: 2025,
         lines: [
-            { text: 'A placeholder for a project or milestone.' },
+            { text: 'lead organizer for bc\'s largest hs hackathon x3 (120ppl)', href: 'https://bcydc.ca/program/daydream', label: 'BCYDC', icon: '/icons/bcydc.svg', iconAlt: 'BCYDC' },
+            { text: 'represented 27,000 students on my city\'s student council' },
+            { text: 'undercity (hardware hackathon) finalist at github', href: 'https://github.com/brightTheBackpack/smg', label: 'Undercity' },
+            { text: 'built a <20s cube solver for $100', href: 'https://github.com/vuktacic/cuber', label: 'Cube Solver' },
+            { text: 'lead organizer for bc\'s largest hs hackathon x2 (80ppl)', href: 'https://bcydc.ca/program/scrapyard', label: 'BCYDC', icon: '/icons/bcydc.svg', iconAlt: 'BCYDC' },
+            { text: 'led my frc team to #2 in bc' },
+            { text: 'worked a winter at cypress mountain', href: 'https://www.cypressmountain.com/', label: 'Cypress Mountain' },
         ],
     },
     {
         year: 2024,
         lines: [
-            { text: 'A placeholder for a formative experience.' },
+            { text: 'organizer for bc\'s largest hs hackathon (50ppl)', href: 'https://bcydc.ca/program/yvrhacks', label: 'BCYDC', icon: '/icons/bcydc.svg', iconAlt: 'BCYDC' },
+            { text: 'discovered mountain biking' },
+            { text: 'interned at translink', href: 'https://www.translink.ca/', label: 'Translink' },
         ],
     },
     {
         year: 2023,
         lines: [
-            { text: 'A placeholder for something worth remembering.' },
-        ],
-    },
-    {
-        year: 2022,
-        lines: [
-            { text: 'A placeholder for an earlier project.' },
-        ],
-    },
-    {
-        year: 2021,
-        lines: [
-            { text: 'A placeholder for where it began.' },
+            { text: 'did a lot of volunteering at my school' },
+            { text: 'started leading my frc team @ 14 w/ no experience' },
+            { text: 'got invited to tour yvr airport' },
+            { text: '3d printed a scale replica of vancouver' },
         ],
     },
 ];
@@ -270,16 +274,16 @@ export default function LandingContent() {
     };
 
     return (
-        <div className="grid w-full max-w-7xl gap-48 px-6 py-6 md:grid-cols-[minmax(0,1.2fr)_minmax(18rem,0.8fr)] md:items-start md:px-12 lg:px-24">
+        <div className="grid w-full max-w-7xl gap-32 px-6 py-6 md:grid-cols-[minmax(0,1.2fr)_minmax(18rem,0.9fr)] md:items-start md:px-12 lg:px-24">
             <section className="" aria-label="Profile">
                 <div className="h-[4rem] w-[15rem] pb-6">
                     <Name />
                 </div>
 
                 <div className="space-y-2 pb-6">
-                    <p className="fade-text opacity-0">twelfth grade student from vancouver, bc</p>
-                    <p className="fade-text opacity-0">i do a lot of stuff</p>
-                    <p className="fade-text opacity-0">specialize in building physical things</p>
+                    <p className="fade-text opacity-0">i'm a schulich leader & engineering student @ ubc</p>
+                    <p className="fade-text opacity-0">skier & mountain biker</p>
+                    <p className="fade-text opacity-0">i build (and break!) a lot of robots</p>
                 </div>
 
                 <div className="space-y-4 pb-6">
@@ -296,7 +300,7 @@ export default function LandingContent() {
                             onMouseEnter={handleMouseEnterSection}
                             onMouseLeave={handleMouseLeaveSection}
                         >
-                            <Image src={role.icon} alt={role.alt} width={28} height={28} loading="eager" onMouseOver={handleMouseEnterIcon} onMouseLeave={handleMouseLeaveIcon} />
+                            <img src={role.icon} alt={role.alt} width="28" height="28" loading="eager" onMouseOver={handleMouseEnterIcon} onMouseLeave={handleMouseLeaveIcon} />
                             <p>{role.description}</p>
                         </a>
                     ))}
@@ -316,7 +320,7 @@ export default function LandingContent() {
                     {timelineEntries.map((entry) => (
                         <li key={entry.year} className="fade-text opacity-0">
                             <time dateTime={entry.year.toString()} className="block leading-6 text-zinc-500">{entry.year}</time>
-                            <ul className="text-zinc-300">
+                            <ul className="text-zinc-300 text-sm">
                                 {entry.lines.map((line, index) => (
                                     <li key={`${line.text}-${index}`} className="min-h-6 leading-6">
                                         {line.href ? (
@@ -334,14 +338,14 @@ export default function LandingContent() {
                                                     <span data-timeline-underline aria-hidden="true" className="absolute inset-x-0 bottom-0" style={{ height: "0px", backgroundColor: "currentColor" }} />
                                                 </span>
                                                 <span data-timeline-icons className="flex shrink-0 items-center gap-2">
-                                                    {line.icon && <Image data-timeline-content-icon src={line.icon} alt={line.iconAlt ?? ""} width={20} height={20} loading="eager" aria-hidden={line.iconAlt ? undefined : true} className="shrink-0" onMouseOver={handleMouseEnterTimelineIcon} onMouseLeave={handleMouseLeaveTimelineIcon} />}
+                                                    {line.icon && <img data-timeline-content-icon src={line.icon} alt={line.iconAlt ?? ""} width="20" height="20" loading="eager" aria-hidden={line.iconAlt ? undefined : true} className="shrink-0" onMouseOver={handleMouseEnterTimelineIcon} onMouseLeave={handleMouseLeaveTimelineIcon} />}
                                                     <ExternalLinkIcon />
                                                 </span>
                                             </a>
                                         ) : (
                                             <div className="flex min-h-6 items-center space-x-3">
                                                 <span>{line.text}</span>
-                                                {line.icon && <Image src={line.icon} alt={line.iconAlt ?? ""} width={20} height={20} loading="eager" aria-hidden={line.iconAlt ? undefined : true} className="shrink-0" onMouseOver={handleMouseEnterTimelineIcon} onMouseLeave={handleMouseLeaveTimelineIcon} />}
+                                                {line.icon && <img src={line.icon} alt={line.iconAlt ?? ""} width="20" height="20" loading="eager" aria-hidden={line.iconAlt ? undefined : true} className="shrink-0" onMouseOver={handleMouseEnterTimelineIcon} onMouseLeave={handleMouseLeaveTimelineIcon} />}
                                             </div>
                                         )}
                                     </li>

@@ -28,7 +28,7 @@ No automated test script is currently configured. Run linting and a production b
 
 ## Coding Style & Naming Conventions
 
-Write TypeScript/TSX with four-space indentation, semicolons, and double-quoted strings. Components use PascalCase names and default exports where surrounding code does (for example, `Train` in `train.tsx`); utilities use camelCase. Keep filenames lowercase and concise. Prefer Tailwind utility classes and retain shared CSS in `src/app/globals.css`.
+Write TypeScript/TSX with four-space indentation, semicolons, and double-quoted strings. Components use PascalCase names and default exports where surrounding code does (for example, `Train` in `train.tsx`); utilities use camelCase. Keep filenames lowercase and concise. Prefer Tailwind utility classes and retain shared CSS in `src/app/globals.css`. Use native `<img>` elements for images; do not import or use `next/image`.
 
 ESLint imports the `eslint-config-next` core-web-vitals and TypeScript configurations; fix lint findings rather than suppressing them unless there is a documented reason. TypeScript runs in strict mode, so avoid `any` and keep props explicitly typed when they are introduced.
 
