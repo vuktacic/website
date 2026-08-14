@@ -1,14 +1,9 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  webpack: (config, { dev }) => {
-      if (dev) {
-          config.watchOptions = {
-              poll: true,
-          };
-      }
-      return config;
-  },
+    watchOptions: {
+        pollIntervalMs: 1000,
+    },
 };
 
 export default nextConfig;
