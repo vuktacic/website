@@ -1,8 +1,7 @@
 "use client";
 
-import Name from '@/components/svg/name';
 import LandingContent from '@/components/content';
-import Train from '@/components/train';
+import FeaturedProjects from '@/components/featured-projects';
 import Bottom from '@/components/bottom';
 import { ReactLenis } from 'lenis/react';
 import 'lenis/dist/lenis.css';
@@ -19,15 +18,12 @@ export default function Home() {
             }}>
 
                 <div className="bg-zinc-900 min-h-screen">
-                    <div className="h-[10vh] md:h-[25vh] w-full bg-zinc-900"></div>
-                    <div className="flex flex-col items-center h-screen space-y-6">
-                        <div className="h-[4rem] w-[15rem] opacity-0 name-container">
-                            <Name />
-                        </div>
+                    <div className="h-[8vh] md:h-[20vh] w-full bg-zinc-900"></div>
+                    <div className="flex flex-col items-center h-screen">
                         <LandingContent />
                     </div>
 
-                    <Train />
+                    <FeaturedProjects />
 
                     <div className="h-[70vh] md:h-[50vh] w-full bg-zinc-900"></div>
                     <div className="h-[20vh] w-full bg-zinc-900 bot"></div>
