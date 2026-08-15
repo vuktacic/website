@@ -20,6 +20,10 @@ export default function Name() {
     }, []);
 
     const handleMouseEnterName = (e: React.MouseEvent<HTMLDivElement>) => {
+        if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
+            return;
+        }
+
         animate(e.currentTarget, {
             color: "#ffa1ad",
             duration: 800,
@@ -28,6 +32,10 @@ export default function Name() {
     };
 
     const handleMouseLeaveName = (e: React.MouseEvent<HTMLDivElement>) => {
+        if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
+            return;
+        }
+
         animate(e.currentTarget, {
             color: "#ffffff",
             duration: 800,
@@ -42,7 +50,7 @@ export default function Name() {
             onMouseEnter={handleMouseEnterName}
             onMouseLeave={handleMouseLeaveName}
         >
-            <span className="name-text whitespace-nowrap text-5xl leading-none text-current font-semibold text-center">
+            <span className="name-text whitespace-nowrap text-4xl leading-none text-current font-semibold text-center sm:text-5xl">
                 Vuk Tacic
             </span>
         </div>

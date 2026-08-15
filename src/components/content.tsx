@@ -41,6 +41,8 @@ type TimelineLine = {
     text: string;
     icon?: string;
     iconAlt?: string;
+    iconWidth?: number;
+    iconHeight?: number;
     href?: string;
     label?: string;
 };
@@ -50,7 +52,7 @@ const timelineEntries: TimelineEntry[] = [
         year: 2026,
         lines: [
             { text: 'currently building a chess-playing robot', href: 'https://github.com/vuktacic/chessler', label: 'Chess bot' },
-            { text: 'showcased my projects at opensauce', icon: '/icons/open-sauce.png', iconAlt: 'Open Sauce', href: 'https://opensauce.com/', label: 'Open Sauce' },
+            { text: 'showcased my projects at opensauce', icon: '/icons/open-sauce.png', iconAlt: 'Open Sauce', iconWidth: 15, iconHeight: 20, href: 'https://opensauce.com/', label: 'Open Sauce' },
             { text: 'built a wind tunnel in 48 hours' },
             { text: 'won hack club nexus', href: 'https://nexus.hackclub.com/', label: 'Hack Club Nexus', icon: '/icons/nexus.png', iconAlt: 'Hack Club Nexus' },
             { text: 'got into waterloo & got full-rides from ubc & uoft', href: 'https://lnkd.in/p/gSM2v9Qc', label: 'linkedin larp announcement' },
@@ -104,7 +106,17 @@ export default function LandingContent() {
     useEffect(() => {
         window.scrollTo(0, 0);
 
-        animate(".fade-text", {
+        const fadeText = Array.from(document.querySelectorAll<HTMLElement>(".fade-text"));
+
+        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+            fadeText.forEach((element) => {
+                element.style.opacity = "1";
+                element.style.transform = "none";
+            });
+            return;
+        }
+
+        animate(fadeText, {
             opacity: 1,
             translateY: 0,
             duration: 1000,
@@ -113,11 +125,17 @@ export default function LandingContent() {
         });
     }, []);
 
+    const canUseHover = () => window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+
     const handleMouseEnterSection = (e: React.MouseEvent<HTMLElement>) => {
+        if (!canUseHover()) {
+            return;
+        }
+
         const img = e.currentTarget.querySelector('img') as HTMLImageElement;
-        const textGroup = e.currentTarget.querySelector('[data-role-link-content]');
         const externalIcon = e.currentTarget.querySelector('[data-role-external-icon]');
-        const underline = e.currentTarget.querySelector('[data-role-underline]');
+        const text = Array.from(e.currentTarget.querySelectorAll('[data-role-text]'));
+        const underline = Array.from(e.currentTarget.querySelectorAll('[data-role-underline]'));
 
         animate(img, {
             translateX: -3,
@@ -126,14 +144,6 @@ export default function LandingContent() {
             scale: 1.1,
             easing: 'inOutQuad'
         });
-        if (textGroup) {
-            animate(textGroup, {
-                translateX: 3,
-                duration: 300,
-                easing: 'inOutQuad'
-            });
-        }
-
         if (externalIcon) {
             animate(externalIcon, {
                 translateX: 3,
@@ -142,7 +152,15 @@ export default function LandingContent() {
             });
         }
 
-        if (underline) {
+        if (text.length > 0) {
+            animate(text, {
+                left: "-3px",
+                duration: 300,
+                easing: 'inOutQuad'
+            });
+        }
+
+        if (underline.length > 0) {
             animate(underline, {
                 textDecorationThickness: "2px",
                 duration: 300,
@@ -152,10 +170,14 @@ export default function LandingContent() {
     };
 
     const handleMouseLeaveSection = (e: React.MouseEvent<HTMLElement>) => {
+        if (!canUseHover()) {
+            return;
+        }
+
         const img = e.currentTarget.querySelector('img') as HTMLImageElement;
-        const textGroup = e.currentTarget.querySelector('[data-role-link-content]');
         const externalIcon = e.currentTarget.querySelector('[data-role-external-icon]');
-        const underline = e.currentTarget.querySelector('[data-role-underline]');
+        const text = Array.from(e.currentTarget.querySelectorAll('[data-role-text]'));
+        const underline = Array.from(e.currentTarget.querySelectorAll('[data-role-underline]'));
 
         animate(img, {
             translateX: 0,
@@ -165,14 +187,6 @@ export default function LandingContent() {
             easing: 'inOutQuad'
         });
 
-        if (textGroup) {
-            animate(textGroup, {
-                translateX: 0,
-                duration: 300,
-                easing: 'inOutQuad'
-            });
-        }
-
         if (externalIcon) {
             animate(externalIcon, {
                 translateX: 0,
@@ -181,7 +195,15 @@ export default function LandingContent() {
             });
         }
 
-        if (underline) {
+        if (text.length > 0) {
+            animate(text, {
+                left: "0px",
+                duration: 300,
+                easing: 'inOutQuad'
+            });
+        }
+
+        if (underline.length > 0) {
             animate(underline, {
                 textDecorationThickness: "0px",
                 duration: 300,
@@ -191,6 +213,10 @@ export default function LandingContent() {
     };
 
     const handleMouseEnterIcon = (e: React.MouseEvent<HTMLImageElement>) => {
+        if (!canUseHover()) {
+            return;
+        }
+
         animate(e.currentTarget, {
             rotate: "-372deg", // -1 turn - 12 deg
             duration: 500,
@@ -199,6 +225,10 @@ export default function LandingContent() {
     }
 
     const handleMouseLeaveIcon = (e: React.MouseEvent<HTMLImageElement>) => {
+        if (!canUseHover()) {
+            return;
+        }
+
         animate(e.currentTarget, {
             rotate: "-12deg",
             duration: 500,
@@ -207,6 +237,10 @@ export default function LandingContent() {
     }
 
     const handleMouseEnterTimelineIcon = (e: React.MouseEvent<HTMLImageElement>) => {
+        if (!canUseHover()) {
+            return;
+        }
+
         animate(e.currentTarget, {
             rotate: "372deg", // 1 turn + 12 deg
             duration: 500,
@@ -215,6 +249,10 @@ export default function LandingContent() {
     };
 
     const handleMouseLeaveTimelineIcon = (e: React.MouseEvent<HTMLImageElement>) => {
+        if (!canUseHover()) {
+            return;
+        }
+
         animate(e.currentTarget, {
             rotate: "12deg",
             duration: 500,
@@ -223,10 +261,14 @@ export default function LandingContent() {
     };
 
     const handleMouseEnterTimelineLink = (e: React.MouseEvent<HTMLAnchorElement>) => {
+        if (!canUseHover()) {
+            return;
+        }
+
         const iconGroup = e.currentTarget.querySelector('[data-timeline-icons]');
         const icon = e.currentTarget.querySelector('[data-timeline-content-icon]');
-        const text = e.currentTarget.querySelector('[data-timeline-text]');
-        const underline = e.currentTarget.querySelector('[data-timeline-underline]');
+        const text = Array.from(e.currentTarget.querySelectorAll('[data-timeline-text]'));
+        const underline = Array.from(e.currentTarget.querySelectorAll('[data-timeline-underline]'));
 
         if (iconGroup) {
             animate(iconGroup, {
@@ -245,15 +287,15 @@ export default function LandingContent() {
             });
         }
 
-        if (text) {
+        if (text.length > 0) {
             animate(text, {
-                translateX: -3,
+                left: "-3px",
                 duration: 300,
                 easing: 'inOutQuad'
             });
         }
 
-        if (underline) {
+        if (underline.length > 0) {
             animate(underline, {
                 textDecorationThickness: "2px",
                 duration: 300,
@@ -263,10 +305,14 @@ export default function LandingContent() {
     };
 
     const handleMouseLeaveTimelineLink = (e: React.MouseEvent<HTMLAnchorElement>) => {
+        if (!canUseHover()) {
+            return;
+        }
+
         const iconGroup = e.currentTarget.querySelector('[data-timeline-icons]');
         const icon = e.currentTarget.querySelector('[data-timeline-content-icon]');
-        const text = e.currentTarget.querySelector('[data-timeline-text]');
-        const underline = e.currentTarget.querySelector('[data-timeline-underline]');
+        const text = Array.from(e.currentTarget.querySelectorAll('[data-timeline-text]'));
+        const underline = Array.from(e.currentTarget.querySelectorAll('[data-timeline-underline]'));
 
         if (iconGroup) {
             animate(iconGroup, {
@@ -285,15 +331,15 @@ export default function LandingContent() {
             });
         }
 
-        if (text) {
+        if (text.length > 0) {
             animate(text, {
-                translateX: 0,
+                left: "0px",
                 duration: 300,
                 easing: 'inOutQuad'
             });
         }
 
-        if (underline) {
+        if (underline.length > 0) {
             animate(underline, {
                 textDecorationThickness: "0px",
                 duration: 300,
@@ -303,7 +349,7 @@ export default function LandingContent() {
     };
 
     return (
-        <div className="grid w-full max-w-7xl gap-32 px-6 py-6 md:grid-cols-[minmax(0,1.2fr)_minmax(18rem,0.9fr)] md:items-start md:px-12 lg:px-24">
+        <div className="grid w-full max-w-7xl gap-12 px-6 py-6 sm:gap-16 sm:px-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(18rem,0.9fr)] lg:items-start lg:gap-32 lg:px-24">
             <section className="" aria-label="Profile">
                 <div className="h-[4rem] w-[15rem] pb-6">
                     <Name />
@@ -315,76 +361,90 @@ export default function LandingContent() {
                     <p className="fade-text opacity-0">i build (and break!) a lot of robots</p>
                 </div>
 
-                <div className="space-y-4 pb-6">
+                <div className="space-y-2 pb-6 sm:space-y-4">
                     <div className={`text-2xl font-bold`}>
                         <p className="fade-text opacity-0">previously:</p>
                     </div>
-                    {roles.map((role) => (
-                        <a
+                    {roles.map((role) => {
+                        const lastSpaceIndex = role.description.lastIndexOf(" ");
+                        const textBeforeLastWord = lastSpaceIndex === -1 ? "" : role.description.slice(0, lastSpaceIndex + 1);
+                        const lastWord = lastSpaceIndex === -1 ? role.description : role.description.slice(lastSpaceIndex + 1);
+
+                        return (
+                            <a
                             key={role.alt}
                             href={role.href}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="flex w-full items-center gap-3 fade-text opacity-0"
+                            className="flex min-h-6 w-full items-center gap-3 fade-text opacity-0 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-pink-300"
                             onMouseEnter={handleMouseEnterSection}
                             onMouseLeave={handleMouseLeaveSection}
                         >
                             <img src={role.icon} alt={role.alt} width="28" height="28" loading="eager" onMouseOver={handleMouseEnterIcon} onMouseLeave={handleMouseLeaveIcon} />
-                            <div data-role-link-content className="flex min-w-0 items-center gap-2">
-                                <span data-role-underline className="inline underline decoration-[0px] underline-offset-2">
-                                    {role.description}
-                                </span>
-                                <span data-role-external-icon className="flex shrink-0">
-                                    <ExternalLinkIcon size={20} />
-                                </span>
-                            </div>
-                        </a>
-                    ))}
+                                <div data-role-link-content className="min-w-0 flex-1">
+                                    {textBeforeLastWord && <span data-role-text data-role-underline className="relative break-words underline decoration-[0px] underline-offset-2">{textBeforeLastWord}</span>}
+                                    <span className="whitespace-nowrap">
+                                        <span data-role-text data-role-underline className="relative underline decoration-[0px] underline-offset-2">{lastWord}</span>{" "}
+                                        <span data-role-external-icon className="inline-flex items-center align-text-bottom no-underline">
+                                            <ExternalLinkIcon size={20} />
+                                        </span>
+                                    </span>
+                                </div>
+                            </a>
+                        );
+                    })}
                 </div>
 
             </section>
 
             <section aria-label="Timeline">
-                <div className="flex items-center gap-4 fade-text opacity-0 pb-6">
+                <div className="flex flex-wrap items-center gap-x-1 gap-y-2 pb-2 fade-text opacity-0 sm:flex-nowrap sm:gap-2 sm:pb-6">
                     {socialLinks.map((socialLink) => (
                         <Icon key={socialLink.alt} {...socialLink} size={24} />
                     ))}
-                    <span className="text-sm text-zinc-400">vuktacic@student.ubc.ca</span>
+                    <span className="basis-full break-all text-sm text-zinc-400 sm:basis-auto sm:break-normal">vuktacic@student.ubc.ca</span>
                 </div>
 
                 <ol>
                     {timelineEntries.map((entry) => (
                         <li key={entry.year} className="fade-text opacity-0">
                             <time dateTime={entry.year.toString()} className="block leading-6 text-zinc-500">{entry.year}</time>
-                            <ul className="text-zinc-300 text-sm">
-                                {entry.lines.map((line, index) => (
-                                    <li key={`${line.text}-${index}`} className="min-h-6 leading-6">
+                            <ul className="text-sm text-zinc-300">
+                                {entry.lines.map((line, index) => {
+                                    const lastSpaceIndex = line.text.lastIndexOf(" ");
+                                    const textBeforeLastWord = lastSpaceIndex === -1 ? "" : line.text.slice(0, lastSpaceIndex + 1);
+                                    const lastWord = lastSpaceIndex === -1 ? line.text : line.text.slice(lastSpaceIndex + 1);
+
+                                    return (
+                                        <li key={`${line.text}-${index}`} className="min-h-6 leading-6">
                                         {line.href ? (
                                             <a
                                                 href={line.href}
                                                 target="_blank"
                                                 rel="noopener noreferrer"
                                                 aria-label={line.label ?? line.text}
-                                                className="flex min-h-6 w-fit items-center space-x-2"
+                                                className="min-h-6 break-words focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-pink-300"
                                                 onMouseEnter={handleMouseEnterTimelineLink}
                                                 onMouseLeave={handleMouseLeaveTimelineLink}
                                             >
-                                                <span data-timeline-text data-timeline-underline className="inline underline decoration-[0px] underline-offset-2">
-                                                    {line.text}
-                                                </span>
-                                                <span data-timeline-icons className="flex shrink-0 items-center gap-2">
-                                                    {line.icon && <img data-timeline-content-icon src={line.icon} alt={line.iconAlt ?? ""} width="20" height="20" loading="eager" aria-hidden={line.iconAlt ? undefined : true} className="shrink-0" onMouseOver={handleMouseEnterTimelineIcon} onMouseLeave={handleMouseLeaveTimelineIcon} />}
-                                                    <ExternalLinkIcon />
+                                                {textBeforeLastWord && <span data-timeline-text data-timeline-underline className="relative break-words underline decoration-[0px] underline-offset-2">{textBeforeLastWord}</span>}
+                                                <span className="whitespace-nowrap">
+                                                    <span data-timeline-text data-timeline-underline className="relative underline decoration-[0px] underline-offset-2">{lastWord}</span>{" "}
+                                                    <span data-timeline-icons className="inline-flex items-center gap-2 align-text-bottom no-underline">
+                                                        {line.icon && <img data-timeline-content-icon src={line.icon} alt={line.iconAlt ?? ""} width={line.iconWidth ?? 20} height={line.iconHeight ?? 20} loading="eager" aria-hidden={line.iconAlt ? undefined : true} className="inline-block" onMouseOver={handleMouseEnterTimelineIcon} onMouseLeave={handleMouseLeaveTimelineIcon} />}
+                                                        <ExternalLinkIcon />
+                                                    </span>
                                                 </span>
                                             </a>
                                         ) : (
-                                            <div className="flex min-h-6 items-center space-x-3">
-                                                <span>{line.text}</span>
-                                                {line.icon && <img src={line.icon} alt={line.iconAlt ?? ""} width="20" height="20" loading="eager" aria-hidden={line.iconAlt ? undefined : true} className="shrink-0" onMouseOver={handleMouseEnterTimelineIcon} onMouseLeave={handleMouseLeaveTimelineIcon} />}
+                                            <div className="flex min-h-6 items-center gap-3">
+                                                <span className="min-w-0 break-words">{line.text}</span>
+                                                {line.icon && <img src={line.icon} alt={line.iconAlt ?? ""} width={line.iconWidth ?? 20} height={line.iconHeight ?? 20} loading="eager" aria-hidden={line.iconAlt ? undefined : true} className="shrink-0" onMouseOver={handleMouseEnterTimelineIcon} onMouseLeave={handleMouseLeaveTimelineIcon} />}
                                             </div>
                                         )}
-                                    </li>
-                                ))}
+                                        </li>
+                                    );
+                                })}
                             </ul>
                         </li>
                     ))}

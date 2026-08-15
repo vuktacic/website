@@ -13,6 +13,10 @@ export default function Mountains({ children }: MountainsProps) {
     const triggerRef = useRef<HTMLDivElement>(null);
 
     const handleMouseEnterMountains = (e: React.MouseEvent<HTMLDivElement>) => {
+        if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
+            return;
+        }
+
         animate(e.currentTarget, {
             color: "#ffa1ad",
             duration: 800,
@@ -21,6 +25,10 @@ export default function Mountains({ children }: MountainsProps) {
     }
 
     const handleMouseLeaveMountains = (e: React.MouseEvent<HTMLDivElement>) => {
+        if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
+            return;
+        }
+
         animate(e.currentTarget, {
             color: "#ffffff",
             duration: 800,
@@ -42,12 +50,22 @@ export default function Mountains({ children }: MountainsProps) {
             .flatMap((line) => svg.createDrawable(line));
         const updateFooterHeight = () => {
             const stageHeight = stage.getBoundingClientRect().height;
-            scrollTarget.style.minHeight = `${stageHeight}px`;
+            const runwayHeight = window.innerHeight * (window.innerWidth >= 1024 ? 0.85 : 0.35);
+            scrollTarget.style.minHeight = `${Math.max(stageHeight, runwayHeight)}px`;
         };
         const resizeObserver = new ResizeObserver(updateFooterHeight);
 
         updateFooterHeight();
         resizeObserver.observe(stage);
+        window.addEventListener("resize", updateFooterHeight);
+
+        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+            return () => {
+                resizeObserver.disconnect();
+                window.removeEventListener("resize", updateFooterHeight);
+                scrollTarget.style.removeProperty("min-height");
+            };
+        }
 
         const viewportOffset = () => window.innerHeight * (100 / 703);
         const scrollObserver = onScroll({
@@ -72,6 +90,7 @@ export default function Mountains({ children }: MountainsProps) {
 
         return () => {
             resizeObserver.disconnect();
+            window.removeEventListener("resize", updateFooterHeight);
             drawAnimation.revert();
             scrollTarget.style.removeProperty("min-height");
         };

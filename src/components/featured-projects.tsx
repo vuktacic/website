@@ -48,6 +48,10 @@ function ExternalLinkIcon() {
 }
 
 function handleProjectMouseEnter(e: React.MouseEvent<HTMLElement>) {
+    if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
+        return;
+    }
+
     const title = e.currentTarget.querySelector('[data-project-title]');
     const icon = e.currentTarget.querySelector('[data-project-icon]');
     const underline = e.currentTarget.querySelector('[data-project-underline]');
@@ -58,6 +62,10 @@ function handleProjectMouseEnter(e: React.MouseEvent<HTMLElement>) {
 }
 
 function handleProjectMouseLeave(e: React.MouseEvent<HTMLElement>) {
+    if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
+        return;
+    }
+
     const title = e.currentTarget.querySelector('[data-project-title]');
     const icon = e.currentTarget.querySelector('[data-project-icon]');
     const underline = e.currentTarget.querySelector('[data-project-underline]');
@@ -80,7 +88,7 @@ function FeaturedProjectCard({ project }: { project: FeaturedProject }) {
             target="_blank"
             rel="noopener noreferrer"
             aria-label={project.label}
-            className="flex w-fit items-center gap-2 text-lg font-bold text-white"
+            className="flex min-h-11 w-fit items-center gap-2 py-2 text-lg font-bold text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-pink-300 lg:min-h-0 lg:py-0"
             onMouseEnter={handleProjectMouseEnter}
             onMouseLeave={handleProjectMouseLeave}
         >
@@ -107,14 +115,14 @@ function FeaturedProjectCard({ project }: { project: FeaturedProject }) {
 
 export default function FeaturedProjects() {
     return (
-        <section aria-labelledby="featured-projects-heading" className="bg-zinc-900 py-24">
-            <div className="mx-auto w-full max-w-7xl px-6 md:px-12 lg:px-24">
-                <div className="md:flex md:items-start">
-                    <div className="md:-mt-[45dvh] md:h-[100dvh] md:shrink-0">
-                        <p id="featured-projects-heading" className="sticky top-6 z-10 mb-8 w-fit shrink-0 bg-zinc-900 pr-4 text-sm font-bold uppercase tracking-[0.2em] text-zinc-500 md:mb-0">featured</p>
+        <section aria-labelledby="featured-projects-heading" className="bg-zinc-900 py-16 sm:py-20 lg:py-24">
+            <div className="mx-auto w-full max-w-7xl px-6 sm:px-8 lg:px-24">
+                <div className="lg:flex lg:items-start">
+                    <div className="mb-8 lg:-mt-[45dvh] lg:mb-0 lg:h-[100dvh] lg:shrink-0">
+                        <p id="featured-projects-heading" className="z-10 w-fit shrink-0 bg-zinc-900 pr-4 text-sm font-bold uppercase tracking-[0.2em] text-zinc-500 lg:sticky lg:top-6">featured</p>
                     </div>
-                    <div className="ml-auto w-full max-w-3xl md:pl-8">
-                        <div className="grid grid-cols-1 items-stretch gap-5 md:grid-cols-2">
+                    <div className="ml-auto w-full max-w-3xl lg:pl-8">
+                        <div className="grid grid-cols-1 items-stretch gap-x-5 gap-y-10 sm:grid-cols-2">
                             {featuredProjects.map((project) => <FeaturedProjectCard key={project.title} project={project} />)}
                         </div>
                     </div>

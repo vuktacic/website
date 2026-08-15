@@ -18,8 +18,8 @@ export default function Home() {
             }}>
 
                 <div className="bg-zinc-900 min-h-screen">
-                    <div className="h-[8vh] md:h-[20vh] w-full bg-zinc-900"></div>
-                    <div className="flex flex-col items-center h-screen">
+                    <div className="h-12 w-full bg-zinc-900 sm:h-[8dvh] lg:h-[20dvh]"></div>
+                    <div className="flex flex-col items-center lg:min-h-screen">
                         <LandingContent />
                     </div>
 
