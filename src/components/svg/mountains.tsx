@@ -1,15 +1,16 @@
 'use client';
 
-import { animate, onScroll, stagger, svg, utils } from "animejs";
-import { useEffect } from "react";
+import { animate, onScroll, stagger, svg } from "animejs";
+import { useEffect, useRef, type ReactNode } from "react";
 
-export default function Mountains() {
+type MountainsProps = {
+    children?: ReactNode;
+};
 
-    useEffect(() => {
-        utils.set(".mountains", {
-            fill: "#ffffff",
-        });
-    }, []);
+export default function Mountains({ children }: MountainsProps) {
+    const stageRef = useRef<HTMLDivElement>(null);
+    const mountainsRef = useRef<HTMLDivElement>(null);
+    const triggerRef = useRef<HTMLDivElement>(null);
 
     const handleMouseEnterMountains = (e: React.MouseEvent<HTMLDivElement>) => {
         animate(e.currentTarget, {
@@ -28,39 +29,61 @@ export default function Mountains() {
     }
 
     useEffect(() => {
-        // we are reaching new levels of cooked code 🗣️🗣️🗣️🗣️
-        animate(svg.createDrawable(".line"), {
-            draw: "0 1",
-            ease: "inOutQuad",
-            duration: 500,
-            delay: stagger(3),
-            autoplay: onScroll({
-                container: "body",
-                enter: `${(100 * window.innerHeight) / 100}px 0%`,
-                onEnter: () => {
-                    animate(svg.createDrawable(".line"), {
-                        draw: "0 1",
-                        ease: "inOutQuad",
-                        duration: 500,
-                        delay: stagger(3),
-                    });
-                },
-                onLeaveBackward: () => {
-                    animate(svg.createDrawable(".line"), {
-                        draw: "1 1",
-                        ease: "inOutQuad",
-                        duration: 250,
-                        delay: stagger(2),
-                    });
-                },
-                debug: false
-            })
+        const stage = stageRef.current;
+        const mountains = mountainsRef.current;
+        const trigger = triggerRef.current;
+        const scrollTarget = mountains?.closest("footer");
+
+        if (!stage || !mountains || !trigger || !scrollTarget) {
+            return;
+        }
+
+        const drawables = Array.from(mountains.querySelectorAll<SVGPathElement>(".line"))
+            .flatMap((line) => svg.createDrawable(line));
+        const updateFooterHeight = () => {
+            const stageHeight = stage.getBoundingClientRect().height;
+            scrollTarget.style.minHeight = `${stageHeight}px`;
+        };
+        const resizeObserver = new ResizeObserver(updateFooterHeight);
+
+        updateFooterHeight();
+        resizeObserver.observe(stage);
+
+        const viewportOffset = () => window.innerHeight * (100 / 703);
+        const scrollObserver = onScroll({
+            target: scrollTarget,
+            enter: () => ({
+                target: trigger.offsetTop + viewportOffset(),
+                container: "end",
+            }),
+            leave: () => ({
+                target: trigger.offsetTop + stage.offsetHeight,
+                container: "end",
+            }),
+            sync: true,
         });
+        const drawAnimation = animate(drawables, {
+            draw: "0 1",
+            ease: "linear",
+            duration: 1000,
+            delay: stagger(3),
+            autoplay: scrollObserver,
+        });
+
+        return () => {
+            resizeObserver.disconnect();
+            drawAnimation.revert();
+            scrollTarget.style.removeProperty("min-height");
+        };
     }, []);
 
     return (
-        <div className="w-full h-auto absolute bottom-0 mountains" style={{ fill: "#ffffff" }} onMouseEnter={handleMouseEnterMountains} onMouseLeave={handleMouseLeaveMountains}>
-            <svg viewBox="0 0 618 168" >
+        <>
+            <div ref={triggerRef} className="mt-auto h-0 w-full" aria-hidden="true" />
+            <div ref={stageRef} className="flex w-full flex-col items-center" >
+                {children}
+                <div ref={mountainsRef} className="mountains h-auto w-full" style={{ color: "#ffffff" }} onMouseEnter={handleMouseEnterMountains} onMouseLeave={handleMouseLeaveMountains}>
+                <svg viewBox="0 0 618 166" className="block w-full overflow-visible">
                 <g stroke="currentColor" fill="none" fillRule="evenodd" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1">
                     <path className="line" d="M592.5 166H617" stroke="currentColor" strokeMiterlimit="16" strokeLinecap="round" />
                     <path className="line" d="M536.5 103C531.523 98.358 530.5 99 528.5 99" stroke="currentColor" strokeMiterlimit="16" strokeLinecap="round" />
@@ -352,7 +375,9 @@ export default function Mountains() {
                     <path className="line" d="M216.639 88.2592C217.795 89.3068 218.988 90.8633 219.439 91.5105" stroke="currentColor" strokeMiterlimit="16" strokeLinecap="round" />
                     <path className="line" d="M214.336 127.411C215.962 128.603 217.753 129.564 218.446 129.895" stroke="currentColor" strokeMiterlimit="16" strokeLinecap="round" />
                 </g>
-            </svg>
-        </div>
+                </svg>
+                </div>
+            </div>
+        </>
     );
 }

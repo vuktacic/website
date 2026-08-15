@@ -52,7 +52,7 @@ const timelineEntries: TimelineEntry[] = [
             { text: 'currently building a chess-playing robot', href: 'https://github.com/vuktacic/chessler', label: 'Chess bot' },
             { text: 'showcased my projects at opensauce', icon: '/icons/open-sauce.png', iconAlt: 'Open Sauce', href: 'https://opensauce.com/', label: 'Open Sauce' },
             { text: 'built a wind tunnel in 48 hours' },
-            { text: 'won hack club nexus', href: 'https://nexus.hackclub.com/', label: 'Hack Club Nexus' },
+            { text: 'won hack club nexus', href: 'https://nexus.hackclub.com/', label: 'Hack Club Nexus', icon: '/icons/nexus.png', iconAlt: 'Hack Club Nexus' },
             { text: 'got into waterloo & got full-rides from ubc & uoft', href: 'https://lnkd.in/p/gSM2v9Qc', label: 'linkedin larp announcement' },
             { text: 'organized my city\'s largest talent show' },
             { text: 'built a lidar scanner for $100', href: 'https://github.com/vuktacic/vdar', label: 'Lidar Scanner' },
@@ -64,11 +64,11 @@ const timelineEntries: TimelineEntry[] = [
     {
         year: 2025,
         lines: [
-            { text: 'lead organizer for bc\'s largest hs hackathon x3 (120ppl)', href: 'https://bcydc.ca/program/daydream', label: 'BCYDC', icon: '/icons/bcydc.svg', iconAlt: 'BCYDC' },
+            { text: 'lead organizer for bc\'s largest hs hackathon x3 (120ppl)', href: 'https://daydream.bcydc.ca/', label: 'Daydream Vancouver', icon: '/icons/daydream.png', iconAlt: 'Daydream Vancouver' },
             { text: 'represented 27,000 students on my city\'s student council' },
-            { text: 'undercity (hardware hackathon) finalist at github', href: 'https://github.com/brightTheBackpack/smg', label: 'Undercity' },
+            { text: 'undercity (hardware hackathon) finalist at github', href: 'https://undercity.hackclub.com/', label: 'Undercity', icon: '/icons/undercity.svg', iconAlt: 'Undercity' },
             { text: 'built a <20s cube solver for $100', href: 'https://github.com/vuktacic/cuber', label: 'Cube Solver' },
-            { text: 'lead organizer for bc\'s largest hs hackathon x2 (80ppl)', href: 'https://bcydc.ca/program/scrapyard', label: 'BCYDC', icon: '/icons/bcydc.svg', iconAlt: 'BCYDC' },
+            { text: 'lead organizer for bc\'s largest hs hackathon x2 (80ppl)', href: 'https://scrapyard.hackclub.com/vancouver/', label: 'Scrapyard Vancouver', icon: '/icons/scrapyard.png', iconAlt: 'Scrapyard Vancouver' },
             { text: 'led my frc team to #2 in bc' },
             { text: 'worked a winter at cypress mountain', href: 'https://www.cypressmountain.com/', label: 'Cypress Mountain' },
         ],
@@ -76,9 +76,9 @@ const timelineEntries: TimelineEntry[] = [
     {
         year: 2024,
         lines: [
-            { text: 'organizer for bc\'s largest hs hackathon (50ppl)', href: 'https://bcydc.ca/program/yvrhacks', label: 'BCYDC', icon: '/icons/bcydc.svg', iconAlt: 'BCYDC' },
+            { text: 'organizer for bc\'s largest hs hackathon (50ppl)', href: 'https://yvrhacks.bcydc.ca/', label: 'yvrHacks', icon: '/icons/yvrhacks.png', iconAlt: 'yvrHacks' },
             { text: 'discovered mountain biking' },
-            { text: 'interned at translink', href: 'https://www.translink.ca/', label: 'Translink' },
+            { text: 'interned at translink', href: 'https://www.translink.ca/', label: 'Translink', icon: '/icons/translink.png', iconAlt: 'TransLink' },
         ],
     },
     {
@@ -92,9 +92,9 @@ const timelineEntries: TimelineEntry[] = [
     },
 ];
 
-function ExternalLinkIcon() {
+function ExternalLinkIcon({ size = 16 }: { size?: number }) {
     return (
-        <svg aria-hidden="true" viewBox="0 0 24 24" width="16" height="16" className="shrink-0 text-zinc-500">
+        <svg aria-hidden="true" viewBox="0 0 24 24" width={size} height={size} className="shrink-0 text-zinc-500">
             <path fill="currentColor" d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2v7ZM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7Z" />
         </svg>
     );
@@ -115,7 +115,9 @@ export default function LandingContent() {
 
     const handleMouseEnterSection = (e: React.MouseEvent<HTMLElement>) => {
         const img = e.currentTarget.querySelector('img') as HTMLImageElement;
-        const text = e.currentTarget.querySelector('p') as HTMLParagraphElement;
+        const textGroup = e.currentTarget.querySelector('[data-role-link-content]');
+        const externalIcon = e.currentTarget.querySelector('[data-role-external-icon]');
+        const underline = e.currentTarget.querySelector('[data-role-underline]');
 
         animate(img, {
             translateX: -3,
@@ -124,19 +126,36 @@ export default function LandingContent() {
             scale: 1.1,
             easing: 'inOutQuad'
         });
-        animate(text, {
-            translateX: 3,
-            duration: 300,
-            easing: 'inOutQuad',
-            textDecoration: 'underline',
-            textDecorationColor: 'currentColor',
-            textDecorationThickness: '2px'
-        });
+        if (textGroup) {
+            animate(textGroup, {
+                translateX: 3,
+                duration: 300,
+                easing: 'inOutQuad'
+            });
+        }
+
+        if (externalIcon) {
+            animate(externalIcon, {
+                translateX: 3,
+                duration: 300,
+                easing: 'inOutQuad'
+            });
+        }
+
+        if (underline) {
+            animate(underline, {
+                textDecorationThickness: "2px",
+                duration: 300,
+                easing: 'inOutQuad'
+            });
+        }
     };
 
     const handleMouseLeaveSection = (e: React.MouseEvent<HTMLElement>) => {
         const img = e.currentTarget.querySelector('img') as HTMLImageElement;
-        const text = e.currentTarget.querySelector('p') as HTMLParagraphElement;
+        const textGroup = e.currentTarget.querySelector('[data-role-link-content]');
+        const externalIcon = e.currentTarget.querySelector('[data-role-external-icon]');
+        const underline = e.currentTarget.querySelector('[data-role-underline]');
 
         animate(img, {
             translateX: 0,
@@ -146,19 +165,29 @@ export default function LandingContent() {
             easing: 'inOutQuad'
         });
 
-        animate(text, {
-            translateX: 0,
-            duration: 300,
-            easing: 'inOutQuad',
-            textDecoration: 'none',
-            textDecorationColor: 'currentColor',
-            textDecorationThickness: '0px',
-            onComplete: () => {
-                animate(text, {
-                    textDecorationColor: 'transparent',
-                })
-            }
-        });
+        if (textGroup) {
+            animate(textGroup, {
+                translateX: 0,
+                duration: 300,
+                easing: 'inOutQuad'
+            });
+        }
+
+        if (externalIcon) {
+            animate(externalIcon, {
+                translateX: 0,
+                duration: 300,
+                easing: 'inOutQuad'
+            });
+        }
+
+        if (underline) {
+            animate(underline, {
+                textDecorationThickness: "0px",
+                duration: 300,
+                easing: 'inOutQuad'
+            });
+        }
     };
 
     const handleMouseEnterIcon = (e: React.MouseEvent<HTMLImageElement>) => {
@@ -226,7 +255,7 @@ export default function LandingContent() {
 
         if (underline) {
             animate(underline, {
-                height: "2px",
+                textDecorationThickness: "2px",
                 duration: 300,
                 easing: 'inOutQuad'
             });
@@ -266,7 +295,7 @@ export default function LandingContent() {
 
         if (underline) {
             animate(underline, {
-                height: "0px",
+                textDecorationThickness: "0px",
                 duration: 300,
                 easing: 'inOutQuad'
             });
@@ -281,7 +310,7 @@ export default function LandingContent() {
                 </div>
 
                 <div className="space-y-2 pb-6">
-                    <p className="fade-text opacity-0">i'm a schulich leader & engineering student @ ubc</p>
+                    <p className="fade-text opacity-0">i&apos;m a schulich leader & engineering student @ ubc</p>
                     <p className="fade-text opacity-0">skier & mountain biker</p>
                     <p className="fade-text opacity-0">i build (and break!) a lot of robots</p>
                 </div>
@@ -296,12 +325,19 @@ export default function LandingContent() {
                             href={role.href}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="flex items-center space-x-3 fade-text opacity-0"
+                            className="flex w-full items-center gap-3 fade-text opacity-0"
                             onMouseEnter={handleMouseEnterSection}
                             onMouseLeave={handleMouseLeaveSection}
                         >
                             <img src={role.icon} alt={role.alt} width="28" height="28" loading="eager" onMouseOver={handleMouseEnterIcon} onMouseLeave={handleMouseLeaveIcon} />
-                            <p>{role.description}</p>
+                            <div data-role-link-content className="flex min-w-0 items-center gap-2">
+                                <span data-role-underline className="inline underline decoration-[0px] underline-offset-2">
+                                    {role.description}
+                                </span>
+                                <span data-role-external-icon className="flex shrink-0">
+                                    <ExternalLinkIcon size={20} />
+                                </span>
+                            </div>
                         </a>
                     ))}
                 </div>
@@ -333,9 +369,8 @@ export default function LandingContent() {
                                                 onMouseEnter={handleMouseEnterTimelineLink}
                                                 onMouseLeave={handleMouseLeaveTimelineLink}
                                             >
-                                                <span data-timeline-text className="relative inline-block">
+                                                <span data-timeline-text data-timeline-underline className="inline underline decoration-[0px] underline-offset-2">
                                                     {line.text}
-                                                    <span data-timeline-underline aria-hidden="true" className="absolute inset-x-0 bottom-0" style={{ height: "0px", backgroundColor: "currentColor" }} />
                                                 </span>
                                                 <span data-timeline-icons className="flex shrink-0 items-center gap-2">
                                                     {line.icon && <img data-timeline-content-icon src={line.icon} alt={line.iconAlt ?? ""} width="20" height="20" loading="eager" aria-hidden={line.iconAlt ? undefined : true} className="shrink-0" onMouseOver={handleMouseEnterTimelineIcon} onMouseLeave={handleMouseLeaveTimelineIcon} />}

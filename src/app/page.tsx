@@ -25,8 +25,6 @@ export default function Home() {
 
                     <FeaturedProjects />
 
-                    <div className="h-[70vh] md:h-[50vh] w-full bg-zinc-900"></div>
-                    <div className="h-[20vh] w-full bg-zinc-900 bot"></div>
                     <Bottom />
                     <div className="h-[calc(100lvh-100svh)] w-full bg-zinc-900 hidden [@supports(-moz-appearance:none)]:block"></div>
                 </div>

@@ -10,30 +10,32 @@ type FeaturedProject = {
 
 const featuredProjects: FeaturedProject[] = [
     {
-        title: "VDAR",
-        description: "A compact LiDAR platform for learning how hardware, telemetry, and visualization fit together.",
-        image: "/og.png",
+        title: "vdar",
+        description: "built a low-cost 3d lidar scanner from scratch. custom mechanisms, circuit board, and firmware, along with a custom point cloud visualizer",
+        image: "/previews/vdar.png",
         url: "https://github.com/vuktacic/vdar",
-        label: "Open the VDAR project on GitHub",
+        label: "Open the vdar project on GitHub",
     },
     {
-        title: "Youth developer community",
-        description: "A growing space for high school students to make, learn, and ship projects together.",
-        image: "/og.png",
+        title: "bcydc",
+        description: "scaled the largest high school developer community in bc 10x to 500 members and organized the largest high school hackathons in bc with a local university",
+        image: "/previews/bcydc.png",
         url: "https://bcydc.ca",
-        label: "Open the BCYDC website",
+        label: "Open the bcydc website",
     },
     {
-        title: "Robotics field notes",
-        description: "Experiments in mechanisms, software, and the small details that make a robot reliable.",
-        image: "/og.png",
-        label: "Robotics field notes project",
+        title: "creekside robotics",
+        description: "rebuilt my frc team from the ground up. scaled from 5 to 35 members, went from the bottom to #1 in the province, and worked with every part of the frc stack along the way",
+        image: "/previews/frc.png",
+        url: "https://www.instagram.com/byrnerobotics",
+        label: "open the frc team instagram",
     },
     {
-        title: "Next stop",
-        description: "A placeholder for the next thing worth building. This card is ready to receive a project URL.",
-        image: "/og.png",
-        label: "Next featured project placeholder",
+        title: "chessbot",
+        description: "currently building a chess-playing robot. under-board gantry system, compact 2-layer pcb, and aruco tag pipeline w/ opencv",
+        image: "/previews/chessbot.png",
+        url: "https://github.com/vuktacic/chessler",
+        label: "Open the chess robot project on GitHub",
     },
 ];
 
@@ -52,7 +54,7 @@ function handleProjectMouseEnter(e: React.MouseEvent<HTMLElement>) {
 
     if (title) animate(title, { translateX: -3, duration: 300, easing: "inOutQuad" });
     if (icon) animate(icon, { translateX: 3, duration: 300, easing: "inOutQuad" });
-    if (underline) animate(underline, { height: "2px", duration: 300, easing: "inOutQuad" });
+    if (underline) animate(underline, { textDecorationThickness: "2px", duration: 300, easing: "inOutQuad" });
 }
 
 function handleProjectMouseLeave(e: React.MouseEvent<HTMLElement>) {
@@ -62,15 +64,14 @@ function handleProjectMouseLeave(e: React.MouseEvent<HTMLElement>) {
 
     if (title) animate(title, { translateX: 0, duration: 300, easing: "inOutQuad" });
     if (icon) animate(icon, { translateX: 0, duration: 300, easing: "inOutQuad" });
-    if (underline) animate(underline, { height: "0px", duration: 300, easing: "inOutQuad" });
+    if (underline) animate(underline, { textDecorationThickness: "0px", duration: 300, easing: "inOutQuad" });
 }
 
 function FeaturedProjectCard({ project }: { project: FeaturedProject }) {
     const cardClassName = "group block w-full text-left";
     const projectTitle = (
-        <h3 data-project-title className="relative inline-block">
+        <h3 data-project-title data-project-underline className={`inline underline decoration-[0px] underline-offset-2${project.url ? "" : " no-underline"}`}>
             {project.title}
-            {project.url && <span data-project-underline aria-hidden="true" className="absolute inset-x-0 bottom-0" style={{ height: "0px", backgroundColor: "currentColor" }} />}
         </h3>
     );
     const titleRow = project.url ? (
@@ -109,7 +110,9 @@ export default function FeaturedProjects() {
         <section aria-labelledby="featured-projects-heading" className="bg-zinc-900 py-24">
             <div className="mx-auto w-full max-w-7xl px-6 md:px-12 lg:px-24">
                 <div className="md:flex md:items-start">
-                    <p id="featured-projects-heading" className="sticky top-6 z-10 mb-8 w-fit shrink-0 bg-zinc-900 pr-4 text-sm font-bold uppercase tracking-[0.2em] text-zinc-500 md:mb-0">projects</p>
+                    <div className="md:-mt-[45dvh] md:h-[100dvh] md:shrink-0">
+                        <p id="featured-projects-heading" className="sticky top-6 z-10 mb-8 w-fit shrink-0 bg-zinc-900 pr-4 text-sm font-bold uppercase tracking-[0.2em] text-zinc-500 md:mb-0">featured</p>
+                    </div>
                     <div className="ml-auto w-full max-w-3xl md:pl-8">
                         <div className="grid grid-cols-1 items-stretch gap-5 md:grid-cols-2">
                             {featuredProjects.map((project) => <FeaturedProjectCard key={project.title} project={project} />)}
