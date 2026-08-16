@@ -88,7 +88,7 @@ function FeaturedProjectCard({ project }: { project: FeaturedProject }) {
             target="_blank"
             rel="noopener noreferrer"
             aria-label={project.label}
-            className="flex min-h-11 w-fit items-center gap-2 py-2 text-lg font-bold text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-pink-300 lg:min-h-0 lg:py-0"
+            className="flex w-fit items-center gap-2 text-lg font-bold text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-pink-300"
             onMouseEnter={handleProjectMouseEnter}
             onMouseLeave={handleProjectMouseLeave}
         >
@@ -103,7 +103,7 @@ function FeaturedProjectCard({ project }: { project: FeaturedProject }) {
     const content = (
         <>
             <img src={project.image} alt={`${project.title} project preview`} width="1200" height="675" loading="lazy" className="aspect-video w-full object-cover" />
-            <div className="mt-4 space-y-2">
+            <div className="mt-3 space-y-1.5 sm:mt-4 sm:space-y-2">
                 {titleRow}
                 <p className="leading-relaxed text-zinc-300 text-xs">{project.description}</p>
             </div>
