@@ -52,7 +52,8 @@ const timelineEntries: TimelineEntry[] = [
         year: 2026,
         lines: [
             { text: 'currently building a chess-playing robot', href: 'https://github.com/vuktacic/chessler', label: 'Chess bot' },
-            { text: 'showcased my projects at opensauce', icon: '/icons/open-sauce.png', iconAlt: 'Open Sauce', iconWidth: 15, iconHeight: 20, href: 'https://opensauce.com/', label: 'Open Sauce' },
+            { text: "showcased my lidar scanner to the head of NASA", href: "https://lnkd.in/p/gn3x2Xsn", label: "Jared Isaacman", icon: "/icons/nasa.svg", iconAlt: "NASA", iconWidth: 25, iconHeight: 25 },
+            { text: 'demoed my projects at opensauce', icon: '/icons/open-sauce.png', iconAlt: 'Open Sauce', iconWidth: 15, iconHeight: 20, href: 'https://opensauce.com/', label: 'Open Sauce' },
             { text: 'built a wind tunnel in 48 hours' },
             { text: 'won hack club nexus', href: 'https://nexus.hackclub.com/', label: 'Hack Club Nexus', icon: '/icons/nexus.png', iconAlt: 'Hack Club Nexus' },
             { text: 'got into waterloo & got full-rides from ubc & uoft', href: 'https://lnkd.in/p/gSM2v9Qc', label: 'linkedin larp announcement' },
