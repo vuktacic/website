@@ -25,14 +25,14 @@ const featuredProjects: FeaturedProject[] = [
     },
     {
         title: "creekside robotics",
-        description: "rebuilt my frc team from the ground up. scaled from 5 to 35 members, went from the bottom to #1 in the province, and worked with every part of the frc stack along the way",
+        description: "rebuilt my frc team from the ground up. scaled from 5 to 35 members, went from the bottom to #1 in the province, and worked on everything (cad, mechanical, electrical, software, business, outreach)",
         image: "/previews/frc.png",
         url: "https://www.instagram.com/byrnerobotics",
         label: "open the frc team instagram",
     },
     {
         title: "chessbot",
-        description: "currently building a chess-playing robot. under-board gantry system, compact 2-layer pcb, and aruco tag pipeline w/ opencv",
+        description: "designed a chess-playing robot. under-board gantry system, compact 2-layer pcb, and aruco tag pipeline w/ opencv",
         image: "/previews/chessbot.png",
         url: "https://github.com/vuktacic/chessler",
         label: "Open the chess robot project on GitHub",

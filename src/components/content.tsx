@@ -51,7 +51,8 @@ const timelineEntries: TimelineEntry[] = [
     {
         year: 2026,
         lines: [
-            { text: 'currently building a chess-playing robot', href: 'https://github.com/vuktacic/chessler', label: 'Chess bot' },
+            { text: 'building autonomous vtol aircraft', href: 'https://ubcaerodesign.com', label: 'UBC Aerodesign' },
+            { text: 'designed a chess-playing robot', href: 'https://github.com/vuktacic/chessler', label: 'Chess bot' },
             { text: "showcased my lidar scanner to the head of NASA", href: "https://lnkd.in/p/gn3x2Xsn", label: "Jared Isaacman", icon: "/icons/nasa.svg", iconAlt: "NASA", iconWidth: 25, iconHeight: 25 },
             { text: 'demoed my projects at opensauce', icon: '/icons/open-sauce.png', iconAlt: 'Open Sauce', iconWidth: 15, iconHeight: 20, href: 'https://opensauce.com/', label: 'Open Sauce' },
             { text: 'built a wind tunnel in 48 hours' },
@@ -270,8 +271,9 @@ export default function LandingContent() {
         const icon = e.currentTarget.querySelector('[data-timeline-content-icon]');
         const text = Array.from(e.currentTarget.querySelectorAll('[data-timeline-text]'));
         const underline = Array.from(e.currentTarget.querySelectorAll('[data-timeline-underline]'));
+        const shouldMove = !e.currentTarget.hasAttribute('data-no-slide');
 
-        if (iconGroup) {
+        if (iconGroup && shouldMove) {
             animate(iconGroup, {
                 translateX: 3,
                 duration: 300,
@@ -288,7 +290,7 @@ export default function LandingContent() {
             });
         }
 
-        if (text.length > 0) {
+        if (text.length > 0 && shouldMove) {
             animate(text, {
                 left: "-3px",
                 duration: 300,
@@ -314,8 +316,9 @@ export default function LandingContent() {
         const icon = e.currentTarget.querySelector('[data-timeline-content-icon]');
         const text = Array.from(e.currentTarget.querySelectorAll('[data-timeline-text]'));
         const underline = Array.from(e.currentTarget.querySelectorAll('[data-timeline-underline]'));
+        const shouldMove = !e.currentTarget.hasAttribute('data-no-slide');
 
-        if (iconGroup) {
+        if (iconGroup && shouldMove) {
             animate(iconGroup, {
                 translateX: 0,
                 duration: 300,
@@ -332,7 +335,7 @@ export default function LandingContent() {
             });
         }
 
-        if (text.length > 0) {
+        if (text.length > 0 && shouldMove) {
             animate(text, {
                 left: "0px",
                 duration: 300,
@@ -342,7 +345,7 @@ export default function LandingContent() {
 
         if (underline.length > 0) {
             animate(underline, {
-                textDecorationThickness: "0px",
+                textDecorationThickness: shouldMove ? "0px" : "0.5px",
                 duration: 300,
                 easing: 'inOutQuad'
             });
@@ -357,13 +360,65 @@ export default function LandingContent() {
                 </div>
 
                 <div className="space-y-2 pb-6">
-                    <p className="fade-text opacity-0">i&apos;m a schulich leader & engineering student @ ubc</p>
+                    <p className="fade-text opacity-0">
+                        i&apos;m a{' '}
+                        <a
+                            href="https://schulichleaders.com/scholars/"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            aria-label="Schulich Leader Scholarships"
+                            data-no-slide
+                            className="min-h-6 break-words text-zinc-200 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-pink-300"
+                            onMouseEnter={handleMouseEnterTimelineLink}
+                            onMouseLeave={handleMouseLeaveTimelineLink}
+                        >
+                            <span className="whitespace-nowrap">
+                                <span data-timeline-text data-timeline-underline className="relative underline decoration-[0.5px] underline-offset-2">schulich leader</span>
+                            </span>
+                        </a>{' '}&amp; engineering student @{' '}
+                        <a
+                            href="https://www.ubc.ca/"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            aria-label="University of British Columbia"
+                            data-no-slide
+                            className="min-h-6 break-words text-zinc-200 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-pink-300"
+                            onMouseEnter={handleMouseEnterTimelineLink}
+                            onMouseLeave={handleMouseLeaveTimelineLink}
+                        >
+                            <span className="whitespace-nowrap">
+                                <span data-timeline-text data-timeline-underline className="relative underline decoration-[0.5px] underline-offset-2">ubc</span>
+                            </span>
+                        </a>
+                    </p>
                     <p className="fade-text opacity-0">skier & mountain biker</p>
                     <p className="fade-text opacity-0">i build (and break!) a lot of robots</p>
                 </div>
 
                 <div className="space-y-2 pb-6 sm:space-y-4">
-                    <div className={`text-2xl font-bold`}>
+                    <a
+                        href="https://ubcaerodesign.com/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex min-h-6 w-full items-center gap-3 fade-text opacity-0 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-pink-300"
+                        onMouseEnter={handleMouseEnterSection}
+                        onMouseLeave={handleMouseLeaveSection}
+                    >
+                        <img src="/icons/ubc-aerodesign.png" alt="UBC AeroDesign" width="28" height="28" loading="eager" onMouseOver={handleMouseEnterIcon} onMouseLeave={handleMouseLeaveIcon} />
+                        <div className="min-w-0 flex-1">
+                            <span data-role-text data-role-underline className="relative break-words underline decoration-[0px] underline-offset-2">currently building firmware for a custom flight controller @ </span>
+                            <span className="whitespace-nowrap">
+                                <span data-role-text data-role-underline className="relative underline decoration-[0px] underline-offset-2">ubc aerodesign</span>{" "}
+                                <span data-role-external-icon className="inline-flex items-center align-text-bottom no-underline">
+                                    <ExternalLinkIcon size={20} />
+                                </span>
+                            </span>
+                        </div>
+                    </a>
+                </div>
+
+                <div className="space-y-2 pb-6 sm:space-y-4">
+                    <div className={`text-xl font-bold`}>
                         <p className="fade-text opacity-0">previously:</p>
                     </div>
                     {roles.map((role) => {

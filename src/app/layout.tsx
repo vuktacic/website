@@ -28,7 +28,7 @@ export const metadata: Metadata = {
 
     openGraph: {
         title: 'Vuk',
-        description: 'UBC schulich leader',
+        description: 'UBC engineering student',
         url: 'https://vuktacic.com',
         siteName: 'Vuk Tacic',
         images: [
