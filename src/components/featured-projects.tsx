@@ -32,7 +32,7 @@ const featuredProjects: FeaturedProject[] = [
         title: "chessbot",
         description: "designed a chess-playing robot. under-board gantry system, compact 2-layer pcb, and aruco tag pipeline w/ opencv",
         image: "/previews/chessbot.webp",
-        alt: "CAD of the wooden chessboard and its motor-driven under-board gantry",
+        alt: "CAD of the chessbot board with its under-board gantry, motors, and electronics enclosure",
         url: "https://github.com/vuktacic/chessler",
         label: "Open the chess robot project on GitHub",
     },
