@@ -1,5 +1,19 @@
 'use client';
 
+import { animate } from "animejs";
+
+function handleIconHover(e: React.MouseEvent<HTMLAnchorElement>, hovering: boolean) {
+    if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
+        return;
+    }
+
+    animate(e.currentTarget, {
+        color: hovering ? "#ffa1ad" : "#999999",
+        duration: 800,
+        easing: "inOutQuad",
+    });
+}
+
 interface IconProps {
     src: string;
     alt: string;
@@ -15,14 +29,21 @@ export default function Icon({ src, alt, href = "#", size = 48 }: IconProps) {
             target="_blank"
             rel="noopener noreferrer"
             aria-label={alt}
+            style={{ color: "#999999" }}
+            onMouseEnter={(e) => handleIconHover(e, true)}
+            onMouseLeave={(e) => handleIconHover(e, false)}
         >
-            <img
-                src={src} 
-                alt={alt} 
-                width={size}
-                height={size}
-                loading="eager"
-                className="filter brightness-0 invert opacity-60 hover:opacity-100 transition-opacity duration-200" 
+            <span
+                aria-hidden="true"
+                className="block bg-current"
+                style={{
+                    width: size,
+                    height: size,
+                    maskImage: `url("${src}")`,
+                    maskSize: "contain",
+                    maskPosition: "center",
+                    maskRepeat: "no-repeat",
+                }}
             />
         </a>
     );

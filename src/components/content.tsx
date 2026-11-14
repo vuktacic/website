@@ -98,10 +98,22 @@ const timelineEntries: TimelineEntry[] = [
 
 function ExternalLinkIcon({ size = 16 }: { size?: number }) {
     return (
-        <svg aria-hidden="true" viewBox="0 0 24 24" width={size} height={size} className="shrink-0 text-zinc-500">
+        <svg data-external-link-icon aria-hidden="true" viewBox="0 0 24 24" width={size} height={size} className="shrink-0" style={{ color: "#71717b" }}>
             <path fill="currentColor" d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2v7ZM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7Z" />
         </svg>
     );
+}
+
+function handleEmailHover(e: React.MouseEvent<HTMLSpanElement>, hovering: boolean) {
+    if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
+        return;
+    }
+
+    animate(e.currentTarget, {
+        color: hovering ? "#ffa1ad" : "#9f9fa9",
+        duration: 800,
+        easing: "inOutQuad",
+    });
 }
 
 export default function LandingContent() {
@@ -132,6 +144,11 @@ export default function LandingContent() {
     const handleMouseEnterSection = (e: React.MouseEvent<HTMLElement>) => {
         if (!canUseHover()) {
             return;
+        }
+
+        const linkIcon = e.currentTarget.querySelector('[data-external-link-icon]');
+        if (linkIcon) {
+            animate(linkIcon, { color: "#ffa1ad", duration: 800, easing: "inOutQuad" });
         }
 
         const img = e.currentTarget.querySelector('img') as HTMLImageElement;
@@ -174,6 +191,11 @@ export default function LandingContent() {
     const handleMouseLeaveSection = (e: React.MouseEvent<HTMLElement>) => {
         if (!canUseHover()) {
             return;
+        }
+
+        const linkIcon = e.currentTarget.querySelector('[data-external-link-icon]');
+        if (linkIcon) {
+            animate(linkIcon, { color: "#71717b", duration: 800, easing: "inOutQuad" });
         }
 
         const img = e.currentTarget.querySelector('img') as HTMLImageElement;
@@ -267,6 +289,11 @@ export default function LandingContent() {
             return;
         }
 
+        const linkIcon = e.currentTarget.querySelector('[data-external-link-icon]');
+        if (linkIcon) {
+            animate(linkIcon, { color: "#ffa1ad", duration: 800, easing: "inOutQuad" });
+        }
+
         const iconGroup = e.currentTarget.querySelector('[data-timeline-icons]');
         const icon = e.currentTarget.querySelector('[data-timeline-content-icon]');
         const text = Array.from(e.currentTarget.querySelectorAll('[data-timeline-text]'));
@@ -310,6 +337,11 @@ export default function LandingContent() {
     const handleMouseLeaveTimelineLink = (e: React.MouseEvent<HTMLAnchorElement>) => {
         if (!canUseHover()) {
             return;
+        }
+
+        const linkIcon = e.currentTarget.querySelector('[data-external-link-icon]');
+        if (linkIcon) {
+            animate(linkIcon, { color: "#71717b", duration: 800, easing: "inOutQuad" });
         }
 
         const iconGroup = e.currentTarget.querySelector('[data-timeline-icons]');
@@ -409,7 +441,7 @@ export default function LandingContent() {
                             <span data-role-text data-role-underline className="relative break-words underline decoration-[0px] underline-offset-2">currently building firmware for a custom flight controller @ </span>
                             <span className="whitespace-nowrap">
                                 <span data-role-text data-role-underline className="relative underline decoration-[0px] underline-offset-2">ubc aerodesign</span>{" "}
-                                <span data-role-external-icon className="inline-flex items-center align-text-bottom no-underline">
+                                <span data-role-external-icon className="inline-flex items-center align-[-0.375em] no-underline">
                                     <ExternalLinkIcon size={20} />
                                 </span>
                             </span>
@@ -441,7 +473,7 @@ export default function LandingContent() {
                                     {textBeforeLastWord && <span data-role-text data-role-underline className="relative break-words underline decoration-[0px] underline-offset-2">{textBeforeLastWord}</span>}
                                     <span className="whitespace-nowrap">
                                         <span data-role-text data-role-underline className="relative underline decoration-[0px] underline-offset-2">{lastWord}</span>{" "}
-                                        <span data-role-external-icon className="inline-flex items-center align-text-bottom no-underline">
+                                        <span data-role-external-icon className="inline-flex items-center align-[-0.375em] no-underline">
                                             <ExternalLinkIcon size={20} />
                                         </span>
                                     </span>
@@ -458,7 +490,12 @@ export default function LandingContent() {
                     {socialLinks.map((socialLink) => (
                         <Icon key={socialLink.alt} {...socialLink} size={24} />
                     ))}
-                    <span className="basis-full break-all text-sm text-zinc-400 sm:basis-auto sm:break-normal">vuktacic@student.ubc.ca</span>
+                    <span
+                        className="basis-full break-all text-sm sm:basis-auto sm:break-normal"
+                        style={{ color: "#9f9fa9" }}
+                        onMouseEnter={(e) => handleEmailHover(e, true)}
+                        onMouseLeave={(e) => handleEmailHover(e, false)}
+                    >vuktacic@student.ubc.ca</span>
                 </div>
 
                 <ol>
@@ -486,7 +523,7 @@ export default function LandingContent() {
                                                 {textBeforeLastWord && <span data-timeline-text data-timeline-underline className="relative break-words underline decoration-[0px] underline-offset-2">{textBeforeLastWord}</span>}
                                                 <span className="whitespace-nowrap">
                                                     <span data-timeline-text data-timeline-underline className="relative underline decoration-[0px] underline-offset-2">{lastWord}</span>{" "}
-                                                    <span data-timeline-icons className="inline-flex items-center gap-2 align-text-bottom no-underline">
+                                                    <span data-timeline-icons className="inline-flex items-center gap-2 align-[-0.25em] no-underline">
                                                         {line.icon && <img data-timeline-content-icon src={line.icon} alt={line.iconAlt ?? ""} width={line.iconWidth ?? 20} height={line.iconHeight ?? 20} loading="eager" aria-hidden={line.iconAlt ? undefined : true} className="inline-block" onMouseOver={handleMouseEnterTimelineIcon} onMouseLeave={handleMouseLeaveTimelineIcon} />}
                                                         <ExternalLinkIcon />
                                                     </span>
