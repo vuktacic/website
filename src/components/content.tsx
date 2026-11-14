@@ -300,6 +300,10 @@ export default function LandingContent() {
         const underline = Array.from(e.currentTarget.querySelectorAll('[data-timeline-underline]'));
         const shouldMove = !e.currentTarget.hasAttribute('data-no-slide');
 
+        if (!shouldMove) {
+            animate(e.currentTarget, { color: "#ffa1ad", duration: 800, easing: "inOutQuad" });
+        }
+
         if (iconGroup && shouldMove) {
             animate(iconGroup, {
                 translateX: 3,
@@ -349,6 +353,10 @@ export default function LandingContent() {
         const text = Array.from(e.currentTarget.querySelectorAll('[data-timeline-text]'));
         const underline = Array.from(e.currentTarget.querySelectorAll('[data-timeline-underline]'));
         const shouldMove = !e.currentTarget.hasAttribute('data-no-slide');
+
+        if (!shouldMove) {
+            animate(e.currentTarget, { color: "#e4e4e7", duration: 800, easing: "inOutQuad" });
+        }
 
         if (iconGroup && shouldMove) {
             animate(iconGroup, {
@@ -400,7 +408,8 @@ export default function LandingContent() {
                             rel="noopener noreferrer"
                             aria-label="Schulich Leader Scholarships"
                             data-no-slide
-                            className="min-h-6 break-words text-zinc-200 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-pink-300"
+                            style={{ color: "#e4e4e7" }}
+                            className="min-h-6 break-words focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-pink-300"
                             onMouseEnter={handleMouseEnterTimelineLink}
                             onMouseLeave={handleMouseLeaveTimelineLink}
                         >
@@ -414,7 +423,8 @@ export default function LandingContent() {
                             rel="noopener noreferrer"
                             aria-label="University of British Columbia"
                             data-no-slide
-                            className="min-h-6 break-words text-zinc-200 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-pink-300"
+                            style={{ color: "#e4e4e7" }}
+                            className="min-h-6 break-words focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-pink-300"
                             onMouseEnter={handleMouseEnterTimelineLink}
                             onMouseLeave={handleMouseLeaveTimelineLink}
                         >
