@@ -158,7 +158,7 @@ function FeaturedProjectCard({ project, animatePreviews }: { project: FeaturedPr
             target="_blank"
             rel="noopener noreferrer"
             aria-label={project.label}
-            className="block w-fit text-lg font-bold text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-pink-300"
+            className="block w-fit text-lg font-semibold text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-pink-300"
             onMouseEnter={handleProjectMouseEnter}
             onMouseLeave={handleProjectMouseLeave}
         >
@@ -166,7 +166,7 @@ function FeaturedProjectCard({ project, animatePreviews }: { project: FeaturedPr
             <span data-project-icon className="ml-2 inline-flex align-[-0.25em]"><ExternalLinkIcon /></span>
         </a>
     ) : (
-        <div className="flex w-fit items-center gap-2 text-lg font-bold text-white">
+        <div className="flex w-fit items-center gap-2 text-lg font-semibold text-white">
             {projectTitle}
         </div>
     );
@@ -240,7 +240,7 @@ export default function FeaturedProjects() {
             <div className="mx-auto w-full max-w-7xl px-6 sm:px-8 lg:px-24">
                 <div className="lg:flex lg:items-start">
                     <div className="mb-8 lg:-mt-[45dvh] lg:mb-0 lg:h-[100dvh] lg:shrink-0">
-                        <p onMouseEnter={(e) => handleFeaturedHover(e, true)} onMouseLeave={(e) => handleFeaturedHover(e, false)} id="featured-projects-heading" style={{ color: "#71717b" }} className="z-10 w-fit shrink-0 bg-zinc-900 pr-4 text-sm font-bold uppercase tracking-[0.2em] lg:sticky lg:top-6">featured</p>
+                        <p onMouseEnter={(e) => handleFeaturedHover(e, true)} onMouseLeave={(e) => handleFeaturedHover(e, false)} id="featured-projects-heading" style={{ color: "#71717b" }} className="z-10 w-fit shrink-0 bg-zinc-900 pr-4 text-sm font-semibold uppercase lg:sticky lg:top-6">featured</p>
                     </div>
                     <div className="ml-auto w-full max-w-3xl lg:pl-8">
                         <div className="grid grid-cols-1 items-stretch gap-x-5 gap-y-10 sm:grid-cols-2">

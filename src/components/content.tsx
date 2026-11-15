@@ -460,7 +460,7 @@ export default function LandingContent() {
                 </div>
 
                 <div className="space-y-2 pb-6 sm:space-y-4">
-                    <div className={`text-xl font-bold`}>
+                    <div className={`text-xl font-semibold`}>
                         <p className="fade-text opacity-0">previously:</p>
                     </div>
                     {roles.map((role) => {
