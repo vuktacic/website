@@ -14,7 +14,7 @@ type FeaturedProject = {
 const featuredProjects: FeaturedProject[] = [
     {
         title: "vdar",
-        description: "built a low-cost 3d lidar scanner from scratch. custom mechanisms, circuit board, and firmware, along with a custom point cloud visualizer",
+        description: "built a low-cost 3d lidar scanner from scratch. custom mechanisms, circuit board, and firmware, along with a custom point cloud visualizer. presented to jared isaacman, head of NASA",
         image: "/previews/vdar.webp",
         alt: "Completed vdar scanner beside a point cloud it captured",
         url: "https://github.com/vuktacic/vdar",
@@ -22,7 +22,7 @@ const featuredProjects: FeaturedProject[] = [
     },
     {
         title: "shooter & feeder",
-        description: "designed and built shooter and feeder for our frc robot. characterized flywheel via system identification for feedforward control. machined in house incl. custom rack & pinion. trajectory table for arbitrary distance and angle to target",
+        description: "designed and built shooter and feeder for our frc robot. characterized flywheel via system identification for feedforward control. machined in house incl. custom rack & pinion. distance and angle control via camera localization",
         image: "/previews/shooter.webp",
         video: "/previews/shooter-motion.mp4",
         alt: "Shooter and feeder CAD beside a demonstration of the built mechanism",
