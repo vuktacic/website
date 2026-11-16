@@ -27,3 +27,21 @@ body {
     letter-spacing: normal;
     font-synthesis: none;
 }
+
+.mountains [data-mountain-caption] {
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 300ms ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .mountains[data-drawn="true"]:hover [data-mountain-caption] {
+        opacity: 1;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .mountains [data-mountain-caption] {
+        transition: none;
+    }
+}

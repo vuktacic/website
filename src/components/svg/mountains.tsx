@@ -1,16 +1,11 @@
 'use client';
 
 import { animate, onScroll, stagger, svg } from "animejs";
-import { useEffect, useRef, type ReactNode } from "react";
+import { useEffect, useRef } from "react";
 
-type MountainsProps = {
-    children?: ReactNode;
-};
-
-export default function Mountains({ children }: MountainsProps) {
+export default function Mountains() {
     const stageRef = useRef<HTMLDivElement>(null);
     const mountainsRef = useRef<HTMLDivElement>(null);
-    const triggerRef = useRef<HTMLDivElement>(null);
 
     const handleMouseEnterMountains = (e: React.MouseEvent<HTMLDivElement>) => {
         if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
@@ -39,19 +34,17 @@ export default function Mountains({ children }: MountainsProps) {
     useEffect(() => {
         const stage = stageRef.current;
         const mountains = mountainsRef.current;
-        const trigger = triggerRef.current;
         const scrollTarget = mountains?.closest("footer");
 
-        if (!stage || !mountains || !trigger || !scrollTarget) {
+        if (!stage || !mountains || !scrollTarget) {
             return;
         }
 
-        const drawables = Array.from(mountains.querySelectorAll<SVGPathElement>(".line"))
-            .flatMap((line) => svg.createDrawable(line));
         const updateFooterHeight = () => {
             const stageHeight = stage.getBoundingClientRect().height;
-            const runwayHeight = window.innerHeight * (window.innerWidth >= 1024 ? 0.85 : 0.35);
-            scrollTarget.style.minHeight = `${Math.max(stageHeight, runwayHeight)}px`;
+            // Keep the whole drawing visible for a viewport-relative scroll distance.
+            const runwayHeight = window.innerHeight * 0.45;
+            scrollTarget.style.minHeight = `${stageHeight + runwayHeight}px`;
         };
         const resizeObserver = new ResizeObserver(updateFooterHeight);
 
@@ -60,26 +53,40 @@ export default function Mountains({ children }: MountainsProps) {
         window.addEventListener("resize", updateFooterHeight);
 
         if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+            mountains.dataset.drawn = "true";
             return () => {
                 resizeObserver.disconnect();
                 window.removeEventListener("resize", updateFooterHeight);
                 scrollTarget.style.removeProperty("min-height");
+                delete mountains.dataset.drawn;
             };
         }
 
-        const viewportOffset = () => window.innerHeight * (100 / 703);
+        const drawables = Array.from(mountains.querySelectorAll<SVGPathElement>(".line"))
+            .flatMap((line) => svg.createDrawable(line));
         const scrollObserver = onScroll({
             target: scrollTarget,
             enter: () => ({
-                target: trigger.offsetTop + viewportOffset(),
+                target: stage.offsetHeight - 150,
                 container: "end",
             }),
             leave: () => ({
-                target: trigger.offsetTop + stage.offsetHeight,
+                // Scroll height is rounded; finish within the final reachable pixel.
+                target: scrollTarget.offsetHeight - 1,
                 container: "end",
             }),
             sync: true,
+            onUpdate: (observer) => {
+                const drawn = String(observer.progress > 0);
+                if (mountains.dataset.drawn !== drawn) {
+                    mountains.dataset.drawn = drawn;
+                }
+            },
         });
+        const refreshScroll = () => scrollObserver.refresh();
+        const layoutObserver = new ResizeObserver(refreshScroll);
+        layoutObserver.observe(scrollTarget);
+
         const drawAnimation = animate(drawables, {
             draw: "0 1",
             ease: "linear",
@@ -91,16 +98,17 @@ export default function Mountains({ children }: MountainsProps) {
         return () => {
             resizeObserver.disconnect();
             window.removeEventListener("resize", updateFooterHeight);
+            layoutObserver.disconnect();
             drawAnimation.revert();
+            scrollObserver.revert();
             scrollTarget.style.removeProperty("min-height");
+            delete mountains.dataset.drawn;
         };
     }, []);
 
     return (
         <>
-            <div ref={triggerRef} className="mt-auto h-0 w-full" aria-hidden="true" />
-            <div ref={stageRef} className="flex w-full flex-col items-center" >
-                {children}
+            <div ref={stageRef} className="sticky bottom-0 mt-auto w-full motion-reduce:static">
                 <div ref={mountainsRef} className="mountains h-auto w-full" style={{ color: "#ffffff" }} onMouseEnter={handleMouseEnterMountains} onMouseLeave={handleMouseLeaveMountains}>
                 <svg viewBox="0 0 618 166" className="block w-full overflow-visible">
                 <g stroke="currentColor" fill="none" fillRule="evenodd" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1">
@@ -394,6 +402,18 @@ export default function Mountains({ children }: MountainsProps) {
                     <path className="line" d="M216.639 88.2592C217.795 89.3068 218.988 90.8633 219.439 91.5105" stroke="currentColor" strokeMiterlimit="16" strokeLinecap="round" />
                     <path className="line" d="M214.336 127.411C215.962 128.603 217.753 129.564 218.446 129.895" stroke="currentColor" strokeMiterlimit="16" strokeLinecap="round" />
                 </g>
+                <text
+                    data-mountain-caption
+                    aria-hidden="true"
+                    x="355"
+                    y="44"
+                    transform="rotate(-38 355 44)"
+                    textAnchor="middle"
+                    dominantBaseline="middle"
+                    fill="#71717b"
+                    fontSize="5.75"
+                    className="font-semibold uppercase"
+                >beautiful british columbia.</text>
                 </svg>
                 </div>
             </div>
