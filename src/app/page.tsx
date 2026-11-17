@@ -26,7 +26,6 @@ export default function Home() {
                     <FeaturedProjects />
 
                     <Bottom />
-                    <div className="h-[calc(100lvh-100svh)] w-full bg-zinc-900 hidden [@supports(-moz-appearance:none)]:block"></div>
                 </div>
             </ReactLenis>
         </>

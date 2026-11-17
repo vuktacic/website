@@ -1,11 +1,14 @@
 import type { Metadata } from "next";
-import { Montserrat } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 import Script from "next/script";
 
-const montserrat = Montserrat({
-    variable: "--font-montserrat",
-    subsets: ["latin"],
+const switzer = localFont({
+    src: "../../public/fonts/switzer/Switzer-Variable.woff2",
+    variable: "--font-switzer",
+    weight: "100 900",
+    style: "normal",
+    display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -56,7 +59,7 @@ export const metadata: Metadata = {
 
                 <html lang="en">
                     <body
-                        className={` ${montserrat.variable} antialiased bg-zinc-900 text-white min-h-screen font-sans overflow-x-hidden`}
+                        className={`${switzer.variable} antialiased bg-zinc-900 text-white min-h-screen font-sans overflow-x-hidden`}
                     >
                         {children}
                     </body>

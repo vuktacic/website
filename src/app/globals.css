@@ -1,13 +1,12 @@
 @import "tailwindcss";
 
-@theme {
-    --font-family-sans: var(--font-montserrat), sans-serif;
+@theme inline {
+    --font-sans: var(--font-switzer), sans-serif;
 }
 
 :root {
     --color-background: var(--background);
     --color-foreground: var(--foreground);
-    --font-sans: var(--font-montserrat);
     --font-protest: var(--font-protest-guerilla);
 
     --color-sharp-red-50: #fef2f2;
@@ -21,4 +20,28 @@
     --color-sharp-red-800: #991b1b;
     --color-sharp-red-900: #7f1d1d;
     --color-sharp-red-950: #450a0a;
+}
+
+body {
+    font-weight: 400;
+    letter-spacing: normal;
+    font-synthesis: none;
+}
+
+.mountains [data-mountain-caption] {
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 300ms ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .mountains[data-drawn="true"]:hover [data-mountain-caption] {
+        opacity: 1;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .mountains [data-mountain-caption] {
+        transition: none;
+    }
 }
